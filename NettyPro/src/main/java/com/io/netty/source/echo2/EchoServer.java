@@ -62,7 +62,7 @@ public final class EchoServer {
              // boss 线程调用
              // 1、记录设备连接数；
              // 2、触发阈值、直接拒绝链接；
-             .handler(new LoggingHandler(LogLevel.INFO))
+             .handler(new ConnectMonitorHandler(LogLevel.INFO))
 //             .handler(new ConnectMonitorHandler())
              .childHandler(new ChannelInitializer<SocketChannel>() {
                  // worker group 线程执行的

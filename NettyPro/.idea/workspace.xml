@@ -90,8 +90,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.EchoClient" />
         <item itemvalue="Application.EchoServer" />
+        <item itemvalue="Application.EchoClient" />
       </list>
     </recent_temporary>
   </component>
@@ -102,7 +102,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1656053913027</updated>
-      <workItem from="1656053914909" duration="6489000" />
+      <workItem from="1656053914909" duration="7866000" />
     </task>
     <servers />
   </component>
