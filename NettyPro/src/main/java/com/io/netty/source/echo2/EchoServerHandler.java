@@ -40,7 +40,7 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<Object> {
         super.channelActive(ctx);
         System.out.println("EchoServer Handler channelActive 的线程是=" + Thread.currentThread().getName());
     }
-    
+
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);

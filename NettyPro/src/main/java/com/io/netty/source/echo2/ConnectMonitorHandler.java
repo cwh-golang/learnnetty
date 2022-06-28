@@ -34,6 +34,7 @@ import io.netty.util.internal.logging.InternalLogLevel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import io.netty.util.internal.logging.Slf4JLoggerFactory;
+
 import static io.netty.buffer.ByteBufUtil.appendPrettyHexDump;
 import static io.netty.util.internal.StringUtil.NEWLINE;
 
@@ -45,10 +46,10 @@ public class ConnectMonitorHandler extends ChannelDuplexHandler {
 
     private static final LogLevel DEFAULT_LEVEL = LogLevel.DEBUG;
 
-    protected  InternalLogger logger;
-    protected  InternalLogLevel internalLevel;
+    protected InternalLogger logger;
+    protected InternalLogLevel internalLevel;
 
-    private  LogLevel level;
+    private LogLevel level;
 
     /**
      * Creates a new instance whose logger name is the fully qualified class
@@ -115,7 +116,7 @@ public class ConnectMonitorHandler extends ChannelDuplexHandler {
     /**
      * Creates a new instance with the specified logger name.
      *
-     * @param name the name of the class to use for the logger
+     * @param name  the name of the class to use for the logger
      * @param level the log level
      */
     public ConnectMonitorHandler(String name, LogLevel level) {
@@ -231,7 +232,7 @@ public class ConnectMonitorHandler extends ChannelDuplexHandler {
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         if (logger.isEnabled(internalLevel)) {
-            logger.log(internalLevel, format(ctx, "READ COMPLETE"));
+            logger.log(internalLevel, format(ctx, "READ COMPLETE" + Thread.currentThread().getName()));
         }
         ctx.fireChannelReadComplete();
     }
@@ -242,6 +243,10 @@ public class ConnectMonitorHandler extends ChannelDuplexHandler {
             logger.log(internalLevel, format(ctx, "READ", msg));
         }
         ctx.fireChannelRead(msg);
+//        ctx.channel().close();
+//        ctx.close();
+//        System.out.println((String) msg);
+        System.out.println("ConnectMonitorHandler channelRead 的线程是=" + Thread.currentThread().getName() + msg);
     }
 
     @Override
@@ -331,7 +336,7 @@ public class ConnectMonitorHandler extends ChannelDuplexHandler {
             buf.append(chStr).append(' ').append(eventName).append(": 0B");
             return buf.toString();
         } else {
-            int rows = length / 16 + (length % 15 == 0? 0 : 1) + 4;
+            int rows = length / 16 + (length % 15 == 0 ? 0 : 1) + 4;
             StringBuilder buf = new StringBuilder(chStr.length() + 1 + eventName.length() + 2 + 10 + 1 + 2 + rows * 80);
 
             buf.append(chStr).append(' ').append(eventName).append(": ").append(length).append('B').append(NEWLINE);
@@ -354,7 +359,7 @@ public class ConnectMonitorHandler extends ChannelDuplexHandler {
             buf.append(chStr).append(' ').append(eventName).append(", ").append(msgStr).append(", 0B");
             return buf.toString();
         } else {
-            int rows = length / 16 + (length % 15 == 0? 0 : 1) + 4;
+            int rows = length / 16 + (length % 15 == 0 ? 0 : 1) + 4;
             StringBuilder buf = new StringBuilder(
                     chStr.length() + 1 + eventName.length() + 2 + msgStr.length() + 2 + 10 + 1 + 2 + rows * 80);
 
