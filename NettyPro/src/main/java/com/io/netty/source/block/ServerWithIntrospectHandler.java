@@ -27,7 +27,7 @@ import io.netty.util.concurrent.EventExecutorGroup;
 /**
  * Echoes back any received data from a client.
  */
-public final class ServerWithBlockHandler {
+public final class ServerWithIntrospectHandler {
 
     static final int PORT = Integer.parseInt(System.getProperty("port", "8007"));
 
@@ -50,13 +50,13 @@ public final class ServerWithBlockHandler {
                     // 2、触发阈值、直接拒绝链接；
 //                    .handler(new ConnectMonitorHandler(LogLevel.INFO))
 //             .handler(new ConnectMonitorHandler())
-                    .handler(new BossIntrospectHandler())
+//                    .handler(new BossIntrospectHandler())
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         // worker group 线程执行的
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline p = ch.pipeline();
-//                            p.addLast(new WorkerIntrospectHandler());
+                            p.addLast(new WorkerIntrospectHandler());
                             p.addLast(group, new BizHandler());
 //                            p.addLast(group, new BlockHandler());
                             //说明: 如果我们在addLast 添加handler ，前面有指定
